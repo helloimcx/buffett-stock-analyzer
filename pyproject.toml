@@ -1,18 +1,14 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
-name = "buffett-dividend-strategy"
-version = "2.0.0"
-description = "Enterprise-grade Buffett dividend stock screening system with industry leader prioritization and comprehensive architecture"
+name = "buffett-simple-screener"
+version = "1.0.0"
+description = "Simplified Buffett dividend stock screening system using AKShare"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
     {name = "Buffett Strategy Team"}
 ]
-keywords = ["stock", "investment", "dividend", "a-share", "quantitative", "screening", "industry-leaders", "value-investing"]
+keywords = ["stock", "investment", "dividend", "a-share", "akshare", "screening"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Financial and Insurance Industry",
@@ -23,178 +19,35 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Typing :: Typed",
+    "Programming Language :: Python :: 3.13",
 ]
 
 dependencies = [
     "akshare>=1.13.0",
     "pandas>=2.0.0",
-    "numpy>=1.24.0",
-    "matplotlib>=3.7.0",
-    "seaborn>=0.12.0",
-    "plotly>=5.15.0",
-    "schedule>=1.2.0",
-    "python-dotenv>=1.0.0",
-    "yfinance>=0.2.0",
     "requests>=2.31.0",
-    "beautifulsoup4>=4.12.0",
-    "openpyxl>=3.1.0",
-    "python-telegram-bot>=20.0",
-    "loguru>=0.7.0",
-    "pydantic>=2.5.0",
-    "pydantic-settings>=2.1.0",
-    "redis>=5.0.0",
-    "aiohttp>=3.9.0",
-    "asyncio-throttle>=1.0.0",
-    "structlog>=23.0.0",
-    "tenacity>=8.2.0",
-    "pytest-asyncio>=1.2.0",
-    "ta-lib>=0.6.8",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "pytest-asyncio>=0.21.0",
-    "pytest-mock>=3.10.0",
-    "pytest-xdist>=3.5.0",
     "black>=23.0.0",
     "isort>=5.12.0",
-    "flake8>=6.0.0",
-    "mypy>=1.7.0",
-    "pre-commit>=3.5.0",
-    "ruff>=0.1.0",
-    "coverage>=7.3.0",
-    "sphinx>=7.2.0",
-    "sphinx-rtd-theme>=1.3.0",
-]
-test = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "pytest-asyncio>=0.21.0",
-    "pytest-mock>=3.10.0",
-    "factory-boy>=3.3.0",
-    "faker>=20.0.0",
-]
-performance = [
-    "uvloop>=0.19.0",
-    "orjson>=3.9.0",
-    "lz4>=4.3.0",
 ]
 
 [project.scripts]
-buffett = "src.buffett.cli:main"
-buffett-screen = "src.buffett.scripts.screen:main"
-buffett-monitor = "src.buffett.scripts.monitor:main"
+buffett-simple = "main:main"
 
 [project.urls]
 Homepage = "https://github.com/your-username/buffett"
 Repository = "https://github.com/your-username/buffett"
-Issues = "https://github.com/your-username/buffett/issues"
-
-[dependency-groups]
-dev = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "black>=23.0.0",
-    "isort>=5.12.0",
-    "flake8>=6.0.0",
-    "mypy>=1.0.0",
-    "pre-commit>=3.0.0",
-    "ipython>=8.0.0",
-    "jupyter>=1.0.0",
-]
-
-[tool.hatch.build.targets.wheel]
-packages = ["src"]
 
 [tool.black]
 line-length = 88
-target-version = ['py39', 'py310', 'py311', 'py312']
+target-version = ['py39', 'py310', 'py311', 'py312', 'py313']
 include = '\.pyi?$'
-extend-exclude = '''
-/(
-  # directories
-  \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | build
-  | dist
-)/
-'''
 
 [tool.isort]
 profile = "black"
 multi_line_output = 3
 line_length = 88
-known_first_party = ["buffett"]
-
-[tool.mypy]
-python_version = "3.9"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
-mypy_path = "src"
-plugins = "pydantic.mypy"
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py", "*_test.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = [
-    "--cov=src/buffett",
-    "--cov-report=term-missing",
-    "--cov-report=html",
-    "--cov-report=xml",
-    "--cov-fail-under=90",
-    "-v",
-    "--strict-markers",
-    "--disable-warnings"
-]
-markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "integration: marks tests as integration tests",
-    "unit: marks tests as unit tests",
-    "external_api: marks tests that call external APIs",
-]
-
-[tool.coverage.run]
-source = ["src"]
-omit = [
-    "tests/*",
-    "test_*.py",
-    "*_test.py",
-    "setup.py",
-    "*/__pycache__/*",
-    "*/.*",
-]
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "if self.debug:",
-    "if settings.DEBUG",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "if 0:",
-    "if __name__ == .__main__.:",
-    "class .*\\bProtocol\\):",
-    "@(abc\\.)?abstractmethod",
-    "if TYPE_CHECKING:",
-]
-
