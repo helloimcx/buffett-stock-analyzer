@@ -31,6 +31,10 @@ class StockDataProvider:
         """标准化股票代码格式"""
         symbol = symbol.upper().strip()
 
+        # 跳过北交所股票
+        if symbol.startswith('BJ'):
+            return None  # 北交所股票在雪球网上没有数据
+
         if symbol.startswith('6'):
             return f"SH{symbol}"
         elif symbol.startswith('0') or symbol.startswith('3'):
@@ -55,6 +59,10 @@ class StockDataProvider:
         """获取单只股票详细信息"""
         ak_symbol = self._normalize_symbol(symbol)
 
+        # 跳过北交所股票
+        if ak_symbol is None:
+            return pd.DataFrame()
+
         try:
             time.sleep(self.config.request_delay)  # 请求延迟
             return ak.stock_individual_spot_xq(symbol=ak_symbol)
@@ -65,10 +73,13 @@ class StockDataProvider:
     def extract_stock_info(self, symbol: str, stock_data: Dict[str, Any]) -> Optional[StockInfo]:
         """从原始数据提取股票信息"""
         try:
+            # 跳过北交所股票
+            if symbol.upper().startswith('BJ'):
+                return None
+
             detail_df = self.get_stock_detail(symbol)
             if detail_df.empty:
-                print(f"⚠️  {symbol} 无法获取详细数据，跳过")
-                return None
+                return None  # 静默跳过，不显示错误信息
 
             detail_data = dict(zip(detail_df['item'], detail_df['value']))
 
