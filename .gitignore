@@ -132,6 +132,7 @@ data/cache/*.pkl
 data/*.csv
 data/*.json
 data/*.parquet
+data/monitoring/
 reports/*.html
 reports/*.xlsx
 reports/*.json

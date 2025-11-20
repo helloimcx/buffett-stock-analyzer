@@ -4,9 +4,19 @@
 """
 
 from .stock import StockInfo, ScreeningCriteria, ScreeningResult
+from .monitoring import (
+    TradingSignal, SignalType, SignalStrength,
+    MonitoringConfig, MonitoringSession, StockMonitoringState
+)
 
 __all__ = [
     'StockInfo',
     'ScreeningCriteria',
-    'ScreeningResult'
+    'ScreeningResult',
+    'TradingSignal',
+    'SignalType',
+    'SignalStrength',
+    'MonitoringConfig',
+    'MonitoringSession',
+    'StockMonitoringState'
 ]
