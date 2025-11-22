@@ -133,11 +133,7 @@ data/*.csv
 data/*.json
 data/*.parquet
 data/monitoring/
-reports/*.html
-reports/*.xlsx
-reports/*.json
-reports/*.png
-reports/*.pdf
+reports/
 app.log
 *.log
 .env
